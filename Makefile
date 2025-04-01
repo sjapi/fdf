@@ -1,6 +1,6 @@
 NAME=fdf
 
-SRCS=main.c file.c utils.c
+SRCS=main.c file.c utils.c landscape.c
 
 CC=cc
 

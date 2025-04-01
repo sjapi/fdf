@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:39:55 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/01 18:09:08 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/01 18:59:36 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,41 @@ static int	get_y_len(char *str)
 	return (y_len);
 }
 
-static int	fill_mtrx(t_landscape *landscape, char *str)
+static void	free_mtrx(int **mtrx, int i)
 {
-	(void)landscape;
+	(void)mtrx;
+	(void)i;
+}
+
+static int	fill_mtrx(t_landscape *l, char *str)
+{
+	(void)l;
 	(void)str;
 	return (0);
 }
 
 t_landscape	*create_landscape(char *str)
 {
-	t_landscape	*landscape;
+	t_landscape	*l;
+	int			i;
 
-	landscape = malloc(sizeof(t_landscape));
-	if (!landscape)
+	l = malloc(sizeof(t_landscape));
+	if (!l)
 		return (NULL);
-	landscape->x_len = get_x_len(str);
-	landscape->y_len = get_y_len(str);
-	if (fill_mtrx(landscape, str) == -1)
+	l->x_len = get_x_len(str);
+	l->y_len = get_y_len(str);
+	l->mtrx = malloc(sizeof(int *) * l->y_len);
+	if (!l->mtrx)
+		return (free(l), NULL);
+	i = 0;
+	while (i < l->y_len)
 	{
-		// handle error
+		l->mtrx[i] = malloc(sizeof(int) * l->x_len);
+		if (!l->mtrx[i])
+			return (free_mtrx(l->mtrx, i), free(l), NULL);
+		i++;
 	}
-	return (landscape);
+	if (fill_mtrx(l, str) == -1)
+		return (free_mtrx(l->mtrx, l->y_len), free(l), NULL);
+	return (l);
 }

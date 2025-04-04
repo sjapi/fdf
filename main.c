@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:24:51 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/04 20:39:50 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/04 20:47:56 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ int	main(int argc, char **argv)
 	if (!landscape)
 		return (ft_putstr("ERROR: landscape initialization\n"), 1);
 	debug_print(landscape);
+	free_landscape(landscape, landscape->y_len);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:39:55 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/04 20:34:22 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/04 20:52:20 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,18 @@ static int	get_y_len(char *str)
 	return (y_len);
 }
 
-static void	free_mtrx(int **mtrx, int i)
+void	free_landscape(t_landscape *l, int i)
 {
 	int	j;
 
 	j = 0;
 	while (j < i)
 	{
-		free(mtrx[i]);
+		free(l->mtrx[j]);
 		j++;
 	}
-	free(mtrx);
+	free(l->mtrx);
+	free(l);
 }
 
 static void	fill_mtrx_line(t_landscape *l, char *str, int line)
@@ -122,6 +123,7 @@ t_landscape	*init_landscape(char *path)
 		return (NULL);
 	l->x_len = get_x_len(content);
 	l->y_len = get_y_len(content);
+	free(content);
 	l->mtrx = malloc(sizeof(int *) * l->y_len);
 	if (!l->mtrx)
 		return (free(l), NULL);
@@ -130,10 +132,10 @@ t_landscape	*init_landscape(char *path)
 	{
 		l->mtrx[i] = malloc(sizeof(int) * l->x_len);
 		if (!l->mtrx[i])
-			return (free_mtrx(l->mtrx, i), free(l), NULL);
+			return (free_landscape(l, i), NULL);
 		i++;
 	}
 	if (fill_mtrx(l, path) == -1)
-		return (free_mtrx(l->mtrx, l->y_len), free(l), NULL);
+		return (free_landscape(l, l->y_len), NULL);
 	return (l);
 }

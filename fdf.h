@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:38:08 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/04 20:16:14 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/04 20:47:25 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ void		ft_putstr(char *str);
 char		*get_file_content(char *path);
 
 t_landscape	*init_landscape(char *str);
+
+void		free_landscape(t_landscape *l, int i);
 
 #endif

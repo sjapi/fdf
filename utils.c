@@ -6,25 +6,24 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:48:21 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/01 18:57:42 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/04 19:10:13 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-void	ft_putstr(char *str)
+static int	is_space(char c)
 {
-	while (*str)
-		str += write(1, str, 1);
+	return (c == ' ' || c == '\t' || c == '\n'
+		|| c == '\v' || c == '\f' || c == '\r');
 }
 
-int	ft_atoi(char *str)
+int	ft_atoi(const char *str)
 {
 	int	negative;
 	int	result;
 
-	while (*str == ' ' || *str == '\t' || *str == '\n'
-		|| *str == '\v' || *str == '\f' || *str == '\r')
+	while (is_space(*str))
 		str++;
 	negative = 0;
 	if (*str == '-' || *str == '+')
@@ -34,7 +33,7 @@ int	ft_atoi(char *str)
 		str++;
 	}
 	result = 0;
-	while (*str <= '0' && *str >= '9')
+	while (*str >= '0' && *str <= '9')
 	{
 		result = result * 10 + *str - '0';
 		str++;
@@ -42,4 +41,10 @@ int	ft_atoi(char *str)
 	if (negative)
 		result *= -1;
 	return (result);
+}
+
+void	ft_putstr(char *str)
+{
+	while (*str)
+		str += write(1, str, 1);
 }

@@ -1,6 +1,6 @@
 NAME=fdf
 
-SRCS=main.c file.c utils.c landscape.c
+SRCS=main.c file.c utils.c landscape.c get_next_line.c get_next_line_utils.c
 
 CC=cc
 
@@ -14,6 +14,7 @@ $(NAME):
 clean:
 
 fclean:
+	clear
 	rm -f $(NAME)
 
 re: fclean all 

@@ -6,7 +6,7 @@
 #    By: azolotar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/06 18:24:27 by azolotar          #+#    #+#              #
-#    Updated: 2025/04/06 19:41:44 by azolotar         ###   ########.fr        #
+#    Updated: 2025/04/06 19:54:23 by azolotar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ CC=cc
 
 CFLAGS=-Wall -Wextra -Werror
 
+MLXFLAGS=-lX11 -lXext -lm
 # RULES
 all: obj $(LIBFT_LIB) $(MLX_LIB) $(NAME)
 
@@ -50,7 +51,7 @@ $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 	$(CC) $(CFLAGS) -I $(MLX_DIR) -I $(LIBFT_DIR) -I $(INCLUDES_DIR) -o $@ -c $<
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(MLX_LIB) $(LIBFT_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(MLX_LIB) $(LIBFT_LIB) $(MLXFLAGS) -o $(NAME)
 
 $(MLX_LIB):
 	make -C $(MLX_DIR)

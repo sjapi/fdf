@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:38:08 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/04 20:47:25 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/06 21:35:34 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 # define FDF_H
 
 # include <stdio.h>
+
+typedef struct s_mlx_data_addr
+{
+	void	*image;
+	char	*data_addr;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
+}	t_mlx_data_addr;
 
 typedef struct s_landscape
 {

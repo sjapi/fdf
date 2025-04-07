@@ -6,24 +6,47 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 19:37:04 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/06 21:40:16 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/07 19:06:36 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "mlx.h"
 #include "fdf.h"
+#include <stdio.h>
+
+int	handle_input(int key, void *param)
+{
+	printf("key %d tapped\n", key);
+	(void)param;
+	return (0);
+}
+
+void	img_put_pixel(t_img *img, int x, int y, int color)
+{
+	char	*pixel;
+
+	pixel = img->addr + (img->line_len * y + x * (bpp / 8));
+	*(int *)pixel = color;
+}
 
 int	main(void)
 {
-	void			*mlx;
-	void			*mlx_window;
-	t_mlx_data_addr	image;
-
+	void	*mlx;
+	void	*win;
+	t_img	img;
+	
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 800, 800, "Sueta");
-	image.image = mlx_new_image(mlx, 800, 800);
-	image.data_addr = mlx_get_data_addr(image.image, &image.bits_per_pixel, &image.size_line, &image.endian);
+	win = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "FdF by azolotar");
+
+	img.mlx_img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	img.addr = mlx_get_data_addr(img.mlx_img, &img.bbp, &img.line_len, &img.endian);
+
+	mlx_key_hook(win, handle_input, 0);
 	mlx_loop(mlx);
-	ft_putstr_fd("hello world", 1);
+
+	mlx_destroy_display(mlx);
+	free(mlx);
+
+	return (0);
 }

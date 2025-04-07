@@ -1,12 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
+/* ************************************************************************** */ /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:38:08 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/06 21:35:34 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:37:14 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +14,17 @@
 
 # include <stdio.h>
 
-typedef struct s_mlx_data_addr
+# define WINDOW_WIDTH 800
+# define WINDOW_HEIGHT 800
+
+typedef struct	s_img
 {
-	void	*image;
-	char	*data_addr;
-	int		bits_per_pixel;
-	int		size_line;
+	void	*mlx_img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
 	int		endian;
-}	t_mlx_data_addr;
+}	t_img;
 
 typedef struct s_landscape
 {
@@ -30,8 +32,6 @@ typedef struct s_landscape
 	int	x_len;
 	int	y_len;
 }	t_landscape;
-
-int			ft_atoi(char *str);
 
 void		ft_putstr(char *str);
 

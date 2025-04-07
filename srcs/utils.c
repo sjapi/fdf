@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:48:21 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/04 19:10:13 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:42:35 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,11 @@ void	ft_putstr(char *str)
 {
 	while (*str)
 		str += write(1, str, 1);
+}
+
+int	ft_abs(int n)
+{
+	if (n < 0)
+		return (n * -1);
+	return (n);
 }

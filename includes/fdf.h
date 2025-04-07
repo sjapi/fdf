@@ -26,6 +26,23 @@ typedef struct	s_img
 	int		endian;
 }	t_img;
 
+typedef struct s_dda_line
+{
+	float	dx;
+	float	dy;
+	float	steps;
+	float	x_inc;
+	float	y_inc;
+	float	x;
+	float	y;
+}	t_dda_line;
+
+typedef struct	s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
 typedef struct s_landscape
 {
 	int	**mtrx;
@@ -34,6 +51,8 @@ typedef struct s_landscape
 }	t_landscape;
 
 void		ft_putstr(char *str);
+
+int			ft_abs(int n);
 
 char		*get_file_content(char *path);
 

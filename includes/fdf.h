@@ -16,6 +16,7 @@
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 800
+# define PADDING 100
 
 typedef struct	s_img
 {

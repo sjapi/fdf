@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:48:21 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/07 21:42:35 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:00:27 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,18 @@ int	ft_abs(int n)
 	if (n < 0)
 		return (n * -1);
 	return (n);
+}
+
+int	ft_min(int x, int y)
+{
+	if (x < y)
+		return (x);
+	return (y);
+}
+
+int	ft_max(int x, int y)
+{
+	if (x > y)
+		return (x);
+	return (y);
 }

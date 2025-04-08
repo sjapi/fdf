@@ -54,6 +54,10 @@ void		ft_putstr(char *str);
 
 int			ft_abs(int n);
 
+int			ft_min(int x, int y);
+
+int			ft_max(int x, int y);
+
 char		*get_file_content(char *path);
 
 t_landscape	*init_landscape(char *str);

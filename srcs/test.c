@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 19:37:04 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/07 23:28:04 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:52:57 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,31 +57,34 @@ void	draw_line(t_img *img, t_point p1, t_point p2)
 	}
 }
 
-void	draw_matrix(t_img *img)
+void	draw_matrix(t_img *img, int x, int y)
 {
-	int x_len;
-	int	y_len;
 	int	i;
 	int	j;
-	int	side_len;
-
-	x_len = 8;
-	y_len = 3;
-	side_len = (img->line_len - 100 * 2 - (x_len + 1)) / x_len;
-	i = 0;
-	int y = 100;
-	while (i <= y_len)
+	int	pixels_x;
+	int	pixels_y;
+	int	matrix_width;
+	int	sector_side;
+	int	line_len;
+	int	padding;
+	
+	padding = 100;
+	line_len = 1;	
+	pixels_x = img->line_len / (img->bpp / 8);
+	pixels_y = 
+	matrix_width = pixels_x - padding * 2;
+	sector_side = (matrix_width - line_len * (ft_max(x, y) + 1)) / ft_max(x, y);
+	printf("%d\n", pixels_x);
+	j = padding;
+	while (1)
 	{
-		j = 0;
-		while (j <= x_len)
+		i = padding;
+		while (i <= pixels_x - padding)
 		{
-			int	x = 100 + (j + 1) + side_len * j;
-			printf("%d %d\n", x, y);
-			img_put_pixel(img, x, y, 0x0000ff);
-			j++;
+			img_put_pixel(img, i, j, 0x00ff00);
+			i += sector_side + line_len;
 		}
-		y += 100;
-		i++;
+		j += sector_side + line_len;
 	}
 }
 
@@ -96,7 +99,7 @@ int	main(void)
 	img.mlx_img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	img.addr = mlx_get_data_addr(img.mlx_img,
 			&img.bpp, &img.line_len, &img.endian);
-	draw_matrix(&img);
+	draw_matrix(&img, 8, 3);
 	mlx_put_image_to_window(mlx, win, img.mlx_img, 0, 0);
 	mlx_key_hook(win, handle_input, 0);
 	mlx_loop(mlx);

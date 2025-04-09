@@ -6,11 +6,12 @@
 /*   By: azolotarev <azolotarev@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 01:50:46 by azolotarev        #+#    #+#             */
-/*   Updated: 2025/04/04 19:27:37 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:27:01 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "libft.h"
 
 static char	*i_love_norminette(int fd, int *br, char *line, char *buf)
 {
@@ -69,7 +70,7 @@ static char	*s_get_line(char *buf)
 
 	if (!buf[0])
 		return (NULL);
-	len = ft_strlen(buf, '\n');
+	len = ft_strlen_till(buf, '\n');
 	if (ft_str_contains(buf, '\n'))
 		res = malloc(sizeof(char) * (len + 2));
 	else
@@ -95,13 +96,13 @@ static char	*s_get_next_buf(char *buf)
 	int		i;
 	char	*res;
 
-	line_len = ft_strlen(buf, '\n');
+	line_len = ft_strlen_till(buf, '\n');
 	if (buf[line_len] == '\0')
 	{
 		free(buf);
 		return (NULL);
 	}
-	buf_len = ft_strlen(buf, 0) - line_len - 1;
+	buf_len = ft_strlen_till(buf, 0) - line_len - 1;
 	res = malloc(sizeof(char) * (buf_len + 1));
 	if (!res)
 		return (NULL);

@@ -65,4 +65,6 @@ t_landscape	*init_landscape(char *str);
 
 void		free_landscape(t_landscape *l, int i);
 
+void		draw_matrix(t_img *img, t_landscape *landscape);
+
 #endif

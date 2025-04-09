@@ -6,7 +6,7 @@
 /*   By: azolotarev <azolotarev@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 02:41:06 by azolotarev        #+#    #+#             */
-/*   Updated: 2025/02/19 17:49:28 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:26:06 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_str_contains(char *str, char c)
 	return (0);
 }
 
-int	ft_strlen(char *str, char c)
+int	ft_strlen_till(char *str, char c)
 {
 	int	len;
 
@@ -31,23 +31,4 @@ int	ft_strlen(char *str, char c)
 	while (str[len] && str[len] != c)
 		len++;
 	return (len);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*res;
-	char	*ptr;
-
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	res = malloc(sizeof(char) * (ft_strlen(s1, 0) + ft_strlen(s2, 0) + 1));
-	if (res == NULL)
-		return (NULL);
-	ptr = res;
-	while (*s1)
-		*(ptr++) = *(s1++);
-	while (*s2)
-		*(ptr++) = *(s2++);
-	*ptr = '\0';
-	return (res);
 }

@@ -6,13 +6,14 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:39:55 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/04 20:52:20 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:21:01 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "get_next_line.h"
 #include <stdlib.h>
+#include "libft.h"
 #include <fcntl.h>
 
 static int	get_x_len(char *str)

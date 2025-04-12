@@ -1,11 +1,12 @@
-/* ************************************************************************** */ /*                                                                            */
+/* ************************************************************************** */
+/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 18:38:08 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/07 18:37:14 by azolotar         ###   ########.fr       */
+/*   Created: 2025/04/12 18:40:20 by azolotar          #+#    #+#             */
+/*   Updated: 2025/04/12 20:57:52 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +17,18 @@
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 800
+
 # define PADDING 100
 
-typedef struct	s_img
-{
-	void	*mlx_img;
-	char	*addr;
-	int		bpp;
-	int		line_len;
-	int		endian;
-}	t_img;
+# define Z_MULTIPLIER 10
+
+# define ZOOM_IN 61
+# define ZOOM_OUT 45
+
+# define UP 107
+# define DOWN 106
+# define LEFT 104
+# define RIGHT 108
 
 typedef struct s_dda_line
 {
@@ -51,6 +54,27 @@ typedef struct s_landscape
 	int	y_len;
 }	t_landscape;
 
+typedef struct	s_fdf
+{
+	void	*mlx;
+	void	*win;
+
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+	
+	t_point	origin;
+	int		zoom;
+
+	int		origin_x;
+	int		origin_y;
+
+	t_landscape *l;
+	
+}	t_fdf;
+
 void		ft_putstr(char *str);
 
 int			ft_abs(int n);
@@ -65,6 +89,6 @@ t_landscape	*init_landscape(char *str);
 
 void		free_landscape(t_landscape *l, int i);
 
-void		draw_matrix(t_img *img, t_landscape *landscape);
+int			draw_matrix(t_fdf *fdf);
 
 #endif

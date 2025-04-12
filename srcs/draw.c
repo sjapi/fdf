@@ -6,23 +6,33 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:08:37 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/09 21:28:21 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/12 21:39:17 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "mlx.h"
 #include <math.h>
 
-void	img_put_pixel(t_img *img, int x, int y, int color)
+void	img_put_pixel(t_fdf *fdf, int x, int y, int color)
 {
 	char	*pixel;
 
-	pixel = img->addr + (img->line_len * y + x * (img->bpp / 8));
+	pixel = fdf->addr + (fdf->line_len * y + x * (fdf->bpp / 8));
 	*(int *)pixel = color;
 }
 
+void	img_put_pixel_safe(t_fdf *fdf, int x, int y, int color)
+{
+	if (x < 0 || x >= WINDOW_WIDTH)
+		return ;
+	if (y < 0 || y >= WINDOW_HEIGHT)
+		return ;
+	img_put_pixel(fdf, x, y, color);
+}
+
 /* DDA Algorithm */
-void	draw_line(t_img *img, t_point p1, t_point p2, int color)
+void	draw_line(t_fdf *fdf, t_point p1, t_point p2, int color)
 {
 	int			i;
 	t_dda_line	line;
@@ -38,71 +48,85 @@ void	draw_line(t_img *img, t_point p1, t_point p2, int color)
 	line.x = p1.x;
 	line.y = p1.y;
 	i = 0;
-	img_put_pixel(img, (int)(line.x + 0.5), (int)(line.y + 0.5), color);
+	img_put_pixel_safe(fdf, (int)(line.x + 0.5), (int)(line.y + 0.5), color);
 	while (i < line.steps)
 	{
 		line.x += line.x_inc;
 		line.y += line.y_inc;
-		img_put_pixel(img, (int)(line.x + 0.5), (int)(line.y + 0.5), color);
+		img_put_pixel_safe(fdf, (int)(line.x + 0.5), (int)(line.y + 0.5), color);
 		i++;
 	}
 }
 
-void	draw_matrix1(t_img *img, t_landscape *l)
+void	reset_draw(t_fdf *fdf)
 {
-	int	unit_len;
-	int	origin_x;
-	int	origin_y;
-	int	width;
-	int	height;
-
-	width = WINDOW_WIDTH - PADDING * 2;
-	height = WINDOW_HEIGHT - PADDING * 2;
-	unit_len = 30;//ft_min((width - l->x_len - 1) / l->x_len,
-			//(height - l->y_len - 1) / l->y_len);
-	width = unit_len * l->x_len + l->x_len + 1;
-	height = unit_len * l->y_len + l->y_len + 1;
-	origin_y = (WINDOW_HEIGHT - height) / 2;
-	while (origin_y < height + (WINDOW_HEIGHT - height) / 2)
+	printf("reset background\n");
+	int	i;
+	int	j;
+	
+	i = 0;
+	while (i < WINDOW_WIDTH)
 	{
-		origin_x = (WINDOW_WIDTH - width) / 2;
-		while (origin_x < width + (WINDOW_WIDTH - width) / 2)
+		j = 0;	
+		while (j < WINDOW_HEIGHT)
 		{
-			img_put_pixel(img, origin_x, origin_y, 0xffffff);
-			origin_x += unit_len + 1;
+			img_put_pixel_safe(fdf, i, j, 0x000000);
+			j++;
 		}
-		origin_y += unit_len + 1;
+		i++;
 	}
 }
 
-void	draw_matrix(t_img *img, t_landscape *l)
+void	draw_menu(t_fdf *fdf);
+
+int	draw_matrix(t_fdf *fdf)
 {
-	int	tile_width = 20;
-	int	z = 15;
-	t_point origin = (t_point){ 300, 300 };
-	for (int i = 0; i < l->y_len; i++)
+	int		tile_width;
+	t_point	current;
+	t_point	next;
+
+	reset_draw(fdf);
+	tile_width = 20;
+	tile_width += fdf->zoom;
+	printf("tile width %d\n", tile_width);
+	for (int i = 0; i < fdf->l->y_len; i++)
 	{
-		for (int j = 0; j < l->x_len; j++)
+		for (int j = 0; j < fdf->l->x_len; j++)
 		{
-			printf("%d\n", l->mtrx[i][j]);
-			int x = origin.x + (j - i) * tile_width;
-			int	y = origin.y + (j + i) * (tile_width / 2) - l->mtrx[i][j] * z;
-			img_put_pixel(img, x, y, 0xffffff);
-			if (j < l->x_len - 1)
+			current.x = fdf->origin_x + (j - i) * tile_width;
+			current.y = fdf->origin_y + (j + i) * (tile_width / 2) - fdf->l->mtrx[i][j] * Z_MULTIPLIER;
+			img_put_pixel_safe(fdf, current.x, current.y, 0xffffff);
+			if (j < fdf->l->x_len - 1)
 			{
-				printf("x\n");
-				int next_x = origin.x + (j + 1 - i) * tile_width;
-				int next_y = origin.y + (j + 1 + i) * (tile_width / 2) - l->mtrx[i][j + 1] * z;
-				draw_line(img, (t_point){x, y}, (t_point){next_x, next_y}, 0xffffff);
+				next.x = fdf->origin_x + (j + 1 - i) * tile_width;
+				next.y = fdf->origin_y + (j + 1 + i) * (tile_width / 2) - fdf->l->mtrx[i][j + 1] * Z_MULTIPLIER;
+				draw_line(fdf, current, next, 0xffffff);
 			}
-			if (i < l->y_len - 1)
+			if (i < fdf->l->y_len - 1)
 			{
-				printf("y\n");
-				int next_x = origin.x + (j - i - 1) * tile_width;
-				int next_y = origin.y + (j + i + 1) * (tile_width / 2) - l->mtrx[i + 1][j] * z;
-				draw_line(img, (t_point){x, y}, (t_point){next_x, next_y}, 0xffffff);
+				next.x = fdf->origin_x + (j - i - 1) * tile_width;
+				next.y = fdf->origin_y + (j + i + 1) * (tile_width / 2) - fdf->l->mtrx[i + 1][j] * Z_MULTIPLIER;
+				draw_line(fdf, current, next, 0xffffff);
 			}
-			printf("f\n");
 		}
 	}
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
+	draw_menu(fdf);
+	return (0);
+}
+
+void	draw_menu(t_fdf *fdf)
+{
+	t_point	origin;
+
+	origin.x = 20;
+	origin.y = 0;
+
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move up:    [k]");
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move down:  [j]");
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move left:  [h]");
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move right: [l]");
+	origin.y += 20;
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Zoom in:    [=]");
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Zoom out:   [-]");
 }

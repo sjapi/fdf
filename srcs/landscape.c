@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:39:55 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/09 17:21:01 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/13 15:39:50 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,4 +139,25 @@ t_landscape	*init_landscape(char *path)
 	if (fill_mtrx(l, path) == -1)
 		return (free_landscape(l, l->y_len), NULL);
 	return (l);
+}
+
+void	debug_print(t_landscape *l)
+{
+	int	i;
+	int	j;
+
+	printf("x: %d\n", l->x_len);
+	printf("y: %d\n", l->y_len);
+	i = 0;
+	while (i < l->y_len)
+	{
+		j = 0;
+		while (j < l->x_len)
+		{
+			printf("%5d ", l->mtrx[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
 }

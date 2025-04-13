@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:08:37 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/12 21:39:17 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/13 15:23:31 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,22 +58,19 @@ void	draw_line(t_fdf *fdf, t_point p1, t_point p2, int color)
 	}
 }
 
-void	reset_draw(t_fdf *fdf)
+void	draw_background(t_fdf *fdf)
 {
-	printf("reset background\n");
 	int	i;
 	int	j;
 	
-	i = 0;
-	while (i < WINDOW_WIDTH)
+	i = -1;
+	while (++i < WINDOW_WIDTH)
 	{
-		j = 0;	
-		while (j < WINDOW_HEIGHT)
+		j = -1;	
+		while (++j < WINDOW_HEIGHT)
 		{
 			img_put_pixel_safe(fdf, i, j, 0x000000);
-			j++;
 		}
-		i++;
 	}
 }
 
@@ -85,7 +82,6 @@ int	draw_matrix(t_fdf *fdf)
 	t_point	current;
 	t_point	next;
 
-	reset_draw(fdf);
 	tile_width = 20;
 	tile_width += fdf->zoom;
 	printf("tile width %d\n", tile_width);

@@ -6,11 +6,12 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:48:21 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/08 19:25:30 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/13 15:34:49 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include "libft.h"
 
 static int	is_space(char c)
 {
@@ -68,4 +69,16 @@ int	ft_max(int x, int y)
 	if (x > y)
 		return (x);
 	return (y);
+}
+
+int	ft_is_valid_ext(char *path, char *ext)
+{
+	int	path_len;
+	int	ext_len;
+
+	path_len = ft_strlen(path);
+	ext_len = ft_strlen(ext);
+	if (path_len < ext_len)
+		return (0);
+	return (!ft_strncmp(path + path_len - ext_len, ext, ext_len));
 }

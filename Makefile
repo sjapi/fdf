@@ -6,7 +6,7 @@
 #    By: azolotar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/06 18:24:27 by azolotar          #+#    #+#              #
-#    Updated: 2025/04/09 17:12:44 by azolotar         ###   ########.fr        #
+#    Updated: 2025/04/13 15:56:58 by azolotar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,10 +42,10 @@ CFLAGS=-Wall -Wextra -Werror
 
 MLXFLAGS=-lX11 -lXext -lm
 # RULES
-all: obj $(LIBFT_LIB) $(MLX_LIB) $(NAME)
+all: ./obj $(LIBFT_LIB) $(MLX_LIB) $(NAME)
 
-obj:
-	mkdir $(OBJS_DIR)
+./obj:
+	mkdir -p $(OBJS_DIR)
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 	$(CC) $(CFLAGS) -I $(MLX_DIR) -I $(LIBFT_DIR) -I $(INCLUDES_DIR) -o $@ -c $<
@@ -70,4 +70,4 @@ fclean: clean
 
 re: fclean all 
 
-.PHONY: obj all clean fclean re
+.PHONY: all clean fclean re

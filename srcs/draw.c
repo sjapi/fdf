@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:08:37 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/12 21:39:17 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:03:29 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,21 @@ void	draw_line(t_fdf *fdf, t_point p1, t_point p2, int color)
 	}
 }
 
-void	reset_draw(t_fdf *fdf)
+void	draw_background(t_fdf *fdf)
 {
-	printf("reset background\n");
 	int	i;
 	int	j;
 	
-	i = 0;
-	while (i < WINDOW_WIDTH)
+	i = -1;
+	while (++i < WINDOW_WIDTH)
 	{
-		j = 0;	
-		while (j < WINDOW_HEIGHT)
+		j = -1;	
+		while (++j < WINDOW_HEIGHT)
 		{
 			img_put_pixel_safe(fdf, i, j, 0x000000);
-			j++;
 		}
-		i++;
 	}
 }
-
-void	draw_menu(t_fdf *fdf);
 
 int	draw_matrix(t_fdf *fdf)
 {
@@ -85,7 +80,6 @@ int	draw_matrix(t_fdf *fdf)
 	t_point	current;
 	t_point	next;
 
-	reset_draw(fdf);
 	tile_width = 20;
 	tile_width += fdf->zoom;
 	printf("tile width %d\n", tile_width);
@@ -121,12 +115,10 @@ void	draw_menu(t_fdf *fdf)
 
 	origin.x = 20;
 	origin.y = 0;
-
 	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move up:    [k]");
 	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move down:  [j]");
 	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move left:  [h]");
 	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move right: [l]");
-	origin.y += 20;
-	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Zoom in:    [=]");
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 40, 0x00ff00, "Zoom in:    [=]");
 	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Zoom out:   [-]");
 }

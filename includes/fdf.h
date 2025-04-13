@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:40:20 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/12 20:57:52 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/13 15:33:27 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,17 @@ int			ft_min(int x, int y);
 
 int			ft_max(int x, int y);
 
+int			ft_is_valid_ext(char *path, char *ext);
+
 char		*get_file_content(char *path);
 
 t_landscape	*init_landscape(char *str);
 
 void		free_landscape(t_landscape *l, int i);
+
+void		draw_background(t_fdf *fdf);
+
+void		draw_menu(t_fdf *fdf);
 
 int			draw_matrix(t_fdf *fdf);
 

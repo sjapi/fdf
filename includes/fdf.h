@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:40:20 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/13 15:33:27 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/13 19:09:36 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define DOWN 106
 # define LEFT 104
 # define RIGHT 108
+# define ROTATE_LEFT 65361
+# define ROTATE_RIGHT 65363
 
 typedef struct s_dda_line
 {
@@ -72,6 +74,10 @@ typedef struct	s_fdf
 	int		origin_y;
 
 	t_landscape *l;
+
+	float	angle_x;
+	float	angle_y;
+	float	angle_z;
 	
 }	t_fdf;
 
@@ -96,5 +102,7 @@ void		draw_background(t_fdf *fdf);
 void		draw_menu(t_fdf *fdf);
 
 int			draw_matrix(t_fdf *fdf);
+
+void		draw_logo(t_fdf *fdf);
 
 #endif

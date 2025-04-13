@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:08:37 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/13 16:03:29 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/13 19:23:48 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,37 +76,74 @@ void	draw_background(t_fdf *fdf)
 
 int	draw_matrix(t_fdf *fdf)
 {
+	int		i;
+	int		j;
 	int		tile_width;
 	t_point	current;
 	t_point	next;
 
 	tile_width = 20;
 	tile_width += fdf->zoom;
-	printf("tile width %d\n", tile_width);
-	for (int i = 0; i < fdf->l->y_len; i++)
+	i = -1;
+	while (++i < fdf->l->y_len)
 	{
-		for (int j = 0; j < fdf->l->x_len; j++)
+		j = -1;
+		while (++j < fdf->l->x_len)
 		{
 			current.x = fdf->origin_x + (j - i) * tile_width;
-			current.y = fdf->origin_y + (j + i) * (tile_width / 2) - fdf->l->mtrx[i][j] * Z_MULTIPLIER;
+			current.y = fdf->origin_y + (j + i) * (tile_width / 2) - fdf->l->mtrx[i][j] * tile_width;
 			img_put_pixel_safe(fdf, current.x, current.y, 0xffffff);
 			if (j < fdf->l->x_len - 1)
 			{
 				next.x = fdf->origin_x + (j + 1 - i) * tile_width;
-				next.y = fdf->origin_y + (j + 1 + i) * (tile_width / 2) - fdf->l->mtrx[i][j + 1] * Z_MULTIPLIER;
+				next.y = fdf->origin_y + (j + 1 + i) * (tile_width / 2) - fdf->l->mtrx[i][j + 1] * tile_width;
 				draw_line(fdf, current, next, 0xffffff);
 			}
 			if (i < fdf->l->y_len - 1)
 			{
 				next.x = fdf->origin_x + (j - i - 1) * tile_width;
-				next.y = fdf->origin_y + (j + i + 1) * (tile_width / 2) - fdf->l->mtrx[i + 1][j] * Z_MULTIPLIER;
+				next.y = fdf->origin_y + (j + i + 1) * (tile_width / 2) - fdf->l->mtrx[i + 1][j] * tile_width;
 				draw_line(fdf, current, next, 0xffffff);
 			}
 		}
 	}
-	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
-	draw_menu(fdf);
 	return (0);
+}
+
+t_point	crp(int x, int y)
+{
+	t_point	p;
+
+	p.x = 30 + x * 10;
+	p.y = 20 + y * 10;
+	return (p);
+}
+
+void	draw_logo(t_fdf *fdf)
+{
+	draw_line(fdf, crp(2, 0), crp(3, 0), 0xffffff);
+	draw_line(fdf, crp(3, 0), crp(1, 2), 0xffffff);
+	draw_line(fdf, crp(1, 2), crp(3, 2), 0xffffff);
+	draw_line(fdf, crp(3, 2), crp(3, 4), 0xffffff);
+	draw_line(fdf, crp(3, 4), crp(2, 4), 0xffffff);
+	draw_line(fdf, crp(2, 4), crp(2, 3), 0xffffff);
+	draw_line(fdf, crp(2, 3), crp(0, 3), 0xffffff);
+	draw_line(fdf, crp(0, 3), crp(0, 2), 0xffffff);
+	draw_line(fdf, crp(0, 2), crp(2, 0), 0xffffff);
+	draw_line(fdf, crp(4, 0), crp(5, 0), 0xffffff);
+	draw_line(fdf, crp(5, 0), crp(4, 1), 0xffffff);
+	draw_line(fdf, crp(4, 1), crp(4, 0), 0xffffff);
+	draw_line(fdf, crp(5, 0), crp(6, 0), 0xffffff);
+	draw_line(fdf, crp(6, 0), crp(6, 1), 0xffffff);
+	draw_line(fdf, crp(6, 1), crp(5, 2), 0xffffff);
+	draw_line(fdf, crp(5, 2), crp(5, 3), 0xffffff);
+	draw_line(fdf, crp(5, 3), crp(4, 3), 0xffffff);
+	draw_line(fdf, crp(4, 3), crp(4, 2), 0xffffff);
+	draw_line(fdf, crp(4, 2), crp(5, 1), 0xffffff);
+	draw_line(fdf, crp(5, 1), crp(5, 0), 0xffffff);
+	draw_line(fdf, crp(6, 2), crp(6, 3), 0xffffff);
+	draw_line(fdf, crp(6, 3), crp(5, 3), 0xffffff);
+	draw_line(fdf, crp(5, 3), crp(6, 2), 0xffffff);
 }
 
 void	draw_menu(t_fdf *fdf)
@@ -114,7 +151,7 @@ void	draw_menu(t_fdf *fdf)
 	t_point	origin;
 
 	origin.x = 20;
-	origin.y = 0;
+	origin.y = 60;
 	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move up:    [k]");
 	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move down:  [j]");
 	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move left:  [h]");

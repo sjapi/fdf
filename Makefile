@@ -6,14 +6,16 @@
 #    By: azolotar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/06 18:24:27 by azolotar          #+#    #+#              #
-#    Updated: 2025/04/14 17:55:05 by azolotar         ###   ########.fr        #
+#    Updated: 2025/04/14 20:59:23 by azolotar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=fdf
 
 # SOURCE
-FILES=main.c file.c utils.c map.c get_next_line.c get_next_line_utils.c draw.c
+FILES=main.c file.c utils.c parse.c \
+		get_next_line.c get_next_line_utils.c \
+		draw.c menu.c ft_atoi_base.c
 
 SRCS_DIR=./srcs/
 

@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:40:20 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/14 17:54:30 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/14 20:28:27 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 800
+# define TILE 20
 
 # define ZOOM_IN 61
 # define ZOOM_OUT 45
@@ -28,6 +29,7 @@
 # define RIGHT 108
 # define ROTATE_LEFT 65361
 # define ROTATE_RIGHT 65363
+# define RESET 114
 
 typedef struct s_dda_line
 {
@@ -83,16 +85,20 @@ int			ft_is_valid_ext(char *path, char *ext);
 
 char		*get_file_content(char *path);
 
-t_map		*init_map(char *str);
+t_map		*init_map(char *path);
 
 void		free_map(t_map *m, int i);
 
 void		draw_background(t_fdf *fdf);
 
+void		draw_menu_background(t_fdf *fdf);
+
 void		draw_menu(t_fdf *fdf);
 
-int			draw_matrix(t_fdf *fdf);
+int			draw_iso_map(t_fdf *fdf);
 
 void		draw_42_logo(t_fdf *fdf);
+
+int			ft_atoi_base(char *str, char *base);
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 18:39:55 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/14 19:22:55 by azolotar         ###   ########.fr       */
+/*   Created: 2025/04/14 20:01:12 by azolotar          #+#    #+#             */
+/*   Updated: 2025/04/14 21:12:31 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,54 +60,80 @@ void	free_map(t_map *m, int i)
 {
 	int	j;
 
-	j = 0;
-	while (j < i)
-	{
+	j = -1;
+	while (++j < i)
 		free(m->mtrx[j]);
-		j++;
-	}
 	free(m->mtrx);
 	free(m);
 }
 
-static void	fill_mtrx_line(t_map *m, char *str, int line)
+static int	get_split_count(char **split)
 {
 	int	i;
 
-	i = 0;
-	while (*str != '\0' && *str != '\n')
+	i = -1;
+	while (*split[++i])
+		continue ;
+	return (i);
+}
+
+static void	fill_mtrx_line(t_map *m, int y, char **split)
+{
+	int		x;
+	char	**split_x;
+
+	x = 0;
+	printf("here\n");
+	while (x < m->x_len)
 	{
-		m->mtrx[line][i] = ft_atoi(str);
-		i++;
-		while (*str && *str == ' ')
-			str++;
-		if (*str && *str == '-')
-			str++;
-		while (*str && *str >= '0' && *str <= '9')
-			str++;
+		split_x = ft_split(split[x], ',');
+		if (get_split_count(split_x) == 1)
+		{
+			m->mtrx[y][x] = ft_atoi(split[0]); 
+		}
+		else if (get_split_count(split_x) == 2)
+		{
+			m->mtrx[y][x] = ft_atoi(split_x[0]);
+			printf("%x\n", ft_atoi_base(split_x[1] + 2, "0123456789abcdef"));
+		}
+		else
+		{
+			// report error
+		}
+		x++;
 	}
 }
 
 static int	fill_mtrx(t_map *m, char *path)
 {
 	int		fd;
-	int		i;
+	int		y;
 	char	*line;
+	char	**split;
 
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (-1);
-	i = 0;
-	while (1)
+	y = -1;
+	printf("lets fill matrix\n");
+	while (++y < m->y_len)
 	{
 		line = get_next_line(fd);
-		if (!line && i == m->y_len)
-			break ;
-		else if (!line && i != m->y_len)
-			return (-1);
-		fill_mtrx_line(m, line, i);
+		printf("gnl: %s\n", line);
+		if (!line)
+		{
+			
+		}
+		printf("before split whitespaces\n");
+		split = ft_split(line, ' ');
+		printf("split whitespaces count: %d\n", get_split_count(split));
 		free(line);
-		i++;
+		if (get_split_count(split) != m->x_len)
+		{
+			printf("wrong split count\n");
+			return (-1);
+		}
+		fill_mtrx_line(m, y, split);
 	}
 	return (0);
 }

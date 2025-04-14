@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:24:51 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/14 17:54:11 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/14 21:02:05 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,18 @@ int	close_window(void *param)
 	return ((void)param, exit(1), 0);
 }
 
+void	init_fdf(t_fdf *fdf)
+{
+	fdf->zoom = 0;
+	fdf->origin_x = 300;
+	fdf->origin_y = 300;
+}
+
 void	re_draw(t_fdf *fdf)
 {
 	draw_background(fdf);
-	draw_matrix(fdf);
+	draw_iso_map(fdf);
+	draw_menu_background(fdf);
 	draw_42_logo(fdf);
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
 	draw_menu(fdf);
@@ -34,10 +42,11 @@ int	handle_key_hooks(int key, void *param)
 {
 	t_fdf	*fdf;
 
-	printf("%d\n", key);
 	if (key == ESC)
 		close_window(0);
 	fdf = (t_fdf *)param;
+	if (key == RESET)
+		init_fdf(fdf);
 	fdf->zoom += key == ZOOM_IN;
 	fdf->zoom -= key == ZOOM_OUT;
 	fdf->origin_x -= (key == LEFT) * 10;
@@ -45,13 +54,6 @@ int	handle_key_hooks(int key, void *param)
 	fdf->origin_y -= (key == UP) * 10;
 	fdf->origin_y += (key == DOWN) * 10;
 	return (re_draw(fdf), 0);
-}
-
-void	init_fdf(t_fdf *fdf)
-{
-	fdf->zoom = 1;
-	fdf->origin_x = 300;
-	fdf->origin_y = 300;
 }
 
 int	main(int argc, char **argv)
@@ -66,6 +68,9 @@ int	main(int argc, char **argv)
 	fdf.m = init_map(argv[1]);
 	if (!fdf.m)
 		return (ft_putstr_fd("ERROR: Map initialization failed\n", 1), 1);
+
+	return (0);
+
 	fdf.mlx = mlx_init();
 	fdf.win = mlx_new_window(fdf.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "FdF");
 	fdf.img = mlx_new_image(fdf.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);

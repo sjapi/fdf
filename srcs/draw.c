@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:08:37 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/14 17:59:07 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/14 19:02:07 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	draw_background(t_fdf *fdf)
 	}
 }
 
-int	draw_matrix(t_fdf *fdf)
+int	draw_iso_map(t_fdf *fdf)
 {
 	int		i;
 	int		j;
@@ -82,8 +82,7 @@ int	draw_matrix(t_fdf *fdf)
 	t_point	current;
 	t_point	next;
 
-	tile_width = 20;
-	tile_width += fdf->zoom;
+	tile_width = TILE + fdf->zoom;
 	i = -1;
 	while (++i < fdf->m->y_len)
 	{
@@ -92,7 +91,6 @@ int	draw_matrix(t_fdf *fdf)
 		{
 			current.x = fdf->origin_x + (j - i) * tile_width;
 			current.y = fdf->origin_y + (j + i) * (tile_width / 2) - fdf->m->mtrx[i][j] * tile_width;
-			img_put_pixel_safe(fdf, current.x, current.y, 0xffffff);
 			if (j < fdf->m->x_len - 1)
 			{
 				next.x = fdf->origin_x + (j + 1 - i) * tile_width;
@@ -108,54 +106,4 @@ int	draw_matrix(t_fdf *fdf)
 		}
 	}
 	return (0);
-}
-
-t_point	crp(int x, int y)
-{
-	t_point	p;
-
-	p.x = 30 + x * 10;
-	p.y = 20 + y * 10;
-	return (p);
-}
-
-void	draw_42_logo(t_fdf *fdf)
-{
-	draw_line(fdf, crp(2, 0), crp(3, 0), 0xffffff);
-	draw_line(fdf, crp(3, 0), crp(1, 2), 0xffffff);
-	draw_line(fdf, crp(1, 2), crp(3, 2), 0xffffff);
-	draw_line(fdf, crp(3, 2), crp(3, 4), 0xffffff);
-	draw_line(fdf, crp(3, 4), crp(2, 4), 0xffffff);
-	draw_line(fdf, crp(2, 4), crp(2, 3), 0xffffff);
-	draw_line(fdf, crp(2, 3), crp(0, 3), 0xffffff);
-	draw_line(fdf, crp(0, 3), crp(0, 2), 0xffffff);
-	draw_line(fdf, crp(0, 2), crp(2, 0), 0xffffff);
-	draw_line(fdf, crp(4, 0), crp(5, 0), 0xffffff);
-	draw_line(fdf, crp(5, 0), crp(4, 1), 0xffffff);
-	draw_line(fdf, crp(4, 1), crp(4, 0), 0xffffff);
-	draw_line(fdf, crp(5, 0), crp(6, 0), 0xffffff);
-	draw_line(fdf, crp(6, 0), crp(6, 1), 0xffffff);
-	draw_line(fdf, crp(6, 1), crp(5, 2), 0xffffff);
-	draw_line(fdf, crp(5, 2), crp(5, 3), 0xffffff);
-	draw_line(fdf, crp(5, 3), crp(4, 3), 0xffffff);
-	draw_line(fdf, crp(4, 3), crp(4, 2), 0xffffff);
-	draw_line(fdf, crp(4, 2), crp(5, 1), 0xffffff);
-	draw_line(fdf, crp(5, 1), crp(5, 0), 0xffffff);
-	draw_line(fdf, crp(6, 2), crp(6, 3), 0xffffff);
-	draw_line(fdf, crp(6, 3), crp(5, 3), 0xffffff);
-	draw_line(fdf, crp(5, 3), crp(6, 2), 0xffffff);
-}
-
-void	draw_menu(t_fdf *fdf)
-{
-	t_point	origin;
-
-	origin.x = 20;
-	origin.y = 60;
-	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move up:    [k]");
-	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move down:  [j]");
-	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move left:  [h]");
-	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move right: [l]");
-	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 40, 0x00ff00, "Zoom in:    [=]");
-	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Zoom out:   [-]");
 }

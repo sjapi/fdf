@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   landscape.c                                        :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:39:55 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/13 15:39:50 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:59:39 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,28 +56,28 @@ static int	get_y_len(char *str)
 	return (y_len);
 }
 
-void	free_landscape(t_landscape *l, int i)
+void	free_map(t_map *m, int i)
 {
 	int	j;
 
 	j = 0;
 	while (j < i)
 	{
-		free(l->mtrx[j]);
+		free(m->mtrx[j]);
 		j++;
 	}
-	free(l->mtrx);
-	free(l);
+	free(m->mtrx);
+	free(m);
 }
 
-static void	fill_mtrx_line(t_landscape *l, char *str, int line)
+static void	fill_mtrx_line(t_map *m, char *str, int line)
 {
 	int	i;
 
 	i = 0;
 	while (*str != '\0' && *str != '\n')
 	{
-		l->mtrx[line][i] = ft_atoi(str);
+		m->mtrx[line][i] = ft_atoi(str);
 		i++;
 		while (*str && *str == ' ')
 			str++;
@@ -88,7 +88,7 @@ static void	fill_mtrx_line(t_landscape *l, char *str, int line)
 	}
 }
 
-static int	fill_mtrx(t_landscape *l, char *path)
+static int	fill_mtrx(t_map *m, char *path)
 {
 	int		fd;
 	int		i;
@@ -101,60 +101,60 @@ static int	fill_mtrx(t_landscape *l, char *path)
 	while (1)
 	{
 		line = get_next_line(fd);
-		if (!line && i == l->y_len)
+		if (!line && i == m->y_len)
 			break ;
-		else if (!line && i != l->y_len)
+		else if (!line && i != m->y_len)
 			return (-1);
-		fill_mtrx_line(l, line, i);
+		fill_mtrx_line(m, line, i);
 		free(line);
 		i++;
 	}
 	return (0);
 }
 
-t_landscape	*init_landscape(char *path)
+t_map	*init_map(char *path)
 {
 	char		*content;
-	t_landscape	*l;
+	t_map		*m;
 	int			i;
 
 	content = get_file_content(path);
-	l = malloc(sizeof(t_landscape));
-	if (!content || !l)
+	m = malloc(sizeof(t_map));
+	if (!content || !m)
 		return (NULL);
-	l->x_len = get_x_len(content);
-	l->y_len = get_y_len(content);
+	m->x_len = get_x_len(content);
+	m->y_len = get_y_len(content);
 	free(content);
-	l->mtrx = malloc(sizeof(int *) * l->y_len);
-	if (!l->mtrx)
-		return (free(l), NULL);
+	m->mtrx = malloc(sizeof(int *) * m->y_len);
+	if (!m->mtrx)
+		return (free(m), NULL);
 	i = 0;
-	while (i < l->y_len)
+	while (i < m->y_len)
 	{
-		l->mtrx[i] = malloc(sizeof(int) * l->x_len);
-		if (!l->mtrx[i])
-			return (free_landscape(l, i), NULL);
+		m->mtrx[i] = malloc(sizeof(int) * m->x_len);
+		if (!m->mtrx[i])
+			return (free_map(m, i), NULL);
 		i++;
 	}
-	if (fill_mtrx(l, path) == -1)
-		return (free_landscape(l, l->y_len), NULL);
-	return (l);
+	if (fill_mtrx(m, path) == -1)
+		return (free_map(m, m->y_len), NULL);
+	return (m);
 }
 
-void	debug_print(t_landscape *l)
+void	debug_print(t_map *m)
 {
 	int	i;
 	int	j;
 
-	printf("x: %d\n", l->x_len);
-	printf("y: %d\n", l->y_len);
+	printf("x: %d\n", m->x_len);
+	printf("y: %d\n", m->y_len);
 	i = 0;
-	while (i < l->y_len)
+	while (i < m->y_len)
 	{
 		j = 0;
-		while (j < l->x_len)
+		while (j < m->x_len)
 		{
-			printf("%5d ", l->mtrx[i][j]);
+			printf("%5d ", m->mtrx[i][j]);
 			j++;
 		}
 		printf("\n");

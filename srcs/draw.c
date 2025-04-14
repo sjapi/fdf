@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:08:37 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/13 19:29:05 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:59:07 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,24 +85,24 @@ int	draw_matrix(t_fdf *fdf)
 	tile_width = 20;
 	tile_width += fdf->zoom;
 	i = -1;
-	while (++i < fdf->l->y_len)
+	while (++i < fdf->m->y_len)
 	{
 		j = -1;
-		while (++j < fdf->l->x_len)
+		while (++j < fdf->m->x_len)
 		{
 			current.x = fdf->origin_x + (j - i) * tile_width;
-			current.y = fdf->origin_y + (j + i) * (tile_width / 2) - fdf->l->mtrx[i][j] * tile_width;
+			current.y = fdf->origin_y + (j + i) * (tile_width / 2) - fdf->m->mtrx[i][j] * tile_width;
 			img_put_pixel_safe(fdf, current.x, current.y, 0xffffff);
-			if (j < fdf->l->x_len - 1)
+			if (j < fdf->m->x_len - 1)
 			{
 				next.x = fdf->origin_x + (j + 1 - i) * tile_width;
-				next.y = fdf->origin_y + (j + 1 + i) * (tile_width / 2) - fdf->l->mtrx[i][j + 1] * tile_width;
+				next.y = fdf->origin_y + (j + 1 + i) * (tile_width / 2) - fdf->m->mtrx[i][j + 1] * tile_width;
 				draw_line(fdf, current, next, 0xffffff);
 			}
-			if (i < fdf->l->y_len - 1)
+			if (i < fdf->m->y_len - 1)
 			{
 				next.x = fdf->origin_x + (j - i - 1) * tile_width;
-				next.y = fdf->origin_y + (j + i + 1) * (tile_width / 2) - fdf->l->mtrx[i + 1][j] * tile_width;
+				next.y = fdf->origin_y + (j + i + 1) * (tile_width / 2) - fdf->m->mtrx[i + 1][j] * tile_width;
 				draw_line(fdf, current, next, 0xffffff);
 			}
 		}
@@ -119,7 +119,7 @@ t_point	crp(int x, int y)
 	return (p);
 }
 
-void	draw_logo(t_fdf *fdf)
+void	draw_42_logo(t_fdf *fdf)
 {
 	draw_line(fdf, crp(2, 0), crp(3, 0), 0xffffff);
 	draw_line(fdf, crp(3, 0), crp(1, 2), 0xffffff);

@@ -6,14 +6,14 @@
 #    By: azolotar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/06 18:24:27 by azolotar          #+#    #+#              #
-#    Updated: 2025/04/13 15:56:58 by azolotar         ###   ########.fr        #
+#    Updated: 2025/04/14 17:55:05 by azolotar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=fdf
 
 # SOURCE
-FILES=main.c file.c utils.c landscape.c get_next_line.c get_next_line_utils.c draw.c
+FILES=main.c file.c utils.c map.c get_next_line.c get_next_line_utils.c draw.c
 
 SRCS_DIR=./srcs/
 

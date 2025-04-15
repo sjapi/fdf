@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:16:19 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/16 00:52:24 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/16 01:33:48 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,18 @@ void	draw_42_logo(t_fdf *fdf)
 
 void	draw_menu_background(t_fdf *fdf)
 {
-	(void)fdf;
- 	int		x;
-	int		y;
+	int	x;
+	int	y;
 
 	x = 10 - 1;
 	while (++x < 120)
 	{
-		y =  10 - 1;
+		y = 10 - 1;
 		while (++y < 275)
 		{
 			img_put_pixel_safe(fdf, x, y, 0x282828);
 		}
-	} 
+	}
 }
 
 void	draw_menu(t_fdf *fdf)

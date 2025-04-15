@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:40:20 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/15 22:25:34 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/16 00:46:35 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include <stdio.h>
 
-# define WINDOW_WIDTH 800
-# define WINDOW_HEIGHT 800
+# define WINDOW_WIDTH 1000
+# define WINDOW_HEIGHT 1000
 # define TILE 20
 
 # define ZOOM_IN 61
@@ -48,11 +48,16 @@ typedef struct s_point
 	int	y;
 }	t_point;
 
+typedef struct s_map_point
+{
+	int	value;
+	int	color;
+}	t_map_point;
 typedef struct s_map
 {
-	int	**mtrx;
-	int	x_len;
-	int	y_len;
+	t_map_point	**mtrx;
+	int			x_len;
+	int			y_len;
 }	t_map;
 
 typedef struct s_fdf

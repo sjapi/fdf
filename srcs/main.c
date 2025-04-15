@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:24:51 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/15 23:02:01 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/16 00:38:44 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	handle_key_hooks(int key, void *param)
 	if (key == ESC)
 		return (close_window(fdf), 0);
 	if (key == RESET)
-		return (init_fdf(fdf), 0);
+		init_fdf(fdf);
 	fdf->zoom += key == ZOOM_IN;
 	fdf->zoom -= key == ZOOM_OUT;
 	fdf->origin_x -= (key == LEFT) * 10;

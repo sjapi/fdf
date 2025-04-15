@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:01:12 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/15 23:09:11 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/16 00:34:18 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,17 @@ static int	fill_mtrx_line(t_map *m, int y, char **split)
 			num_and_color = ft_split(split[x], ',');
 			if (!num_and_color)
 				return (0);
-			m->mtrx[y][x] = ft_atoi(num_and_color[0]);
-			printf("color: %s\n", num_and_color[1]);
+			m->mtrx[y][x].value = ft_atoi(num_and_color[0]);
+			m->mtrx[y][x].color = ft_atoi_base(num_and_color[1] + 2, "0123456789abcdef");
+			if (!m->mtrx[y][x].color)
+				m->mtrx[y][x].color = ft_atoi_base(num_and_color[1] + 2, "0123456789ABCDEF");
+			printf("color: %s\n", num_and_color[1] + 2);
 			ft_free_split(num_and_color);
 		}
 		else
 		{
-			m->mtrx[y][x] = ft_atoi(split[x]);
+			m->mtrx[y][x].value = ft_atoi(split[x]);
+			m->mtrx[y][x].color = 0xffffff;
 		}
 	}
 	return (1);
@@ -104,13 +108,13 @@ t_map	*init_map(char *path)
 		return (0);
 	m->y_len = ft_split_count(lines);
 	m->x_len = get_x_len(lines);
-	m->mtrx = malloc(sizeof(int *) * m->y_len);
+	m->mtrx = malloc(sizeof(t_map_point *) * m->y_len);
 	if (!m->mtrx)
 		return (free_map(m, 0), NULL);
 	i = -1;
 	while (++i < m->y_len)
 	{
-		m->mtrx[i] = malloc(sizeof(int) * m->x_len);
+		m->mtrx[i] = malloc(sizeof(t_map_point) * m->x_len);
 		if (!m->mtrx[i])
 			return (free_map(m, i), NULL);
 	}

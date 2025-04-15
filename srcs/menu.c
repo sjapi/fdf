@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:16:19 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/15 23:07:44 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/16 00:52:24 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	draw_menu_background(t_fdf *fdf)
 	while (++x < 120)
 	{
 		y =  10 - 1;
-		while (++y < 230)
+		while (++y < 275)
 		{
 			img_put_pixel_safe(fdf, x, y, 0x282828);
 		}
@@ -76,7 +76,9 @@ void	draw_menu(t_fdf *fdf)
 
 	origin.x = 20;
 	origin.y = 60;
-	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00,
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 25, 0x00bfff,
+		"FdF by azolotar");
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 40, 0x00ff00,
 		"Move up:    [k]");
 	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00,
 		"Move down:  [j]");

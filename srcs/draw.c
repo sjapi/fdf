@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:08:37 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/15 23:38:19 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/16 00:44:29 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,18 @@ int	draw_iso_map(t_fdf *fdf)
 		while (++j < fdf->m->x_len)
 		{
 			current.x = fdf->origin_x + (j - i) * tile_width * 2;
-			current.y = fdf->origin_y + (j + i) * tile_width - fdf->m->mtrx[i][j] * tile_width;
+			current.y = fdf->origin_y + (j + i) * tile_width - fdf->m->mtrx[i][j].value * tile_width;
 			if (j < fdf->m->x_len - 1)
 			{
 				next.x = fdf->origin_x + (j + 1 - i) * tile_width * 2;
-				next.y = fdf->origin_y + (j + 1 + i) * tile_width - fdf->m->mtrx[i][j + 1] * tile_width;
-				draw_line(fdf, current, next, 0xffffff);
+				next.y = fdf->origin_y + (j + 1 + i) * tile_width - fdf->m->mtrx[i][j + 1].value * tile_width;
+				draw_line(fdf, current, next, fdf->m->mtrx[i][j].color);
 			}
 			if (i < fdf->m->y_len - 1)
 			{
 				next.x = fdf->origin_x + (j - i - 1) * tile_width * 2;
-				next.y = fdf->origin_y + (j + i + 1) * tile_width - fdf->m->mtrx[i + 1][j] * tile_width;
-				draw_line(fdf, current, next, 0xffffff);
+				next.y = fdf->origin_y + (j + i + 1) * tile_width - fdf->m->mtrx[i + 1][j].value * tile_width;
+				draw_line(fdf, current, next, fdf->m->mtrx[i][j].color);
 			}
 		}
 	}

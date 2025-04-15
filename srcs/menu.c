@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:16:19 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/14 18:59:49 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/15 23:07:44 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,18 @@ void	draw_menu(t_fdf *fdf)
 
 	origin.x = 20;
 	origin.y = 60;
-	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move up:    [k]");
-	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move down:  [j]");
-	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move left:  [h]");
-	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Move right: [l]");
-	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 40, 0x00ff00, "Zoom in:    [=]");
-	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Zoom out:   [-]");
-	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00, "Reset:      [r]");
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00,
+		"Move up:    [k]");
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00,
+		"Move down:  [j]");
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00,
+		"Move left:  [h]");
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00,
+		"Move right: [l]");
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 40, 0x00ff00,
+		"Zoom in:    [=]");
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00,
+		"Zoom out:   [-]");
+	mlx_string_put(fdf->mlx, fdf->win, origin.x, origin.y += 20, 0x00ff00,
+		"Reset:      [r]");
 }

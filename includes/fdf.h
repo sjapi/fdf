@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:40:20 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/14 20:28:27 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:25:34 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,15 @@ typedef struct s_fdf
 	float	angle_z;
 }	t_fdf;
 
-int			ft_abs(int n);
-
-int			ft_is_valid_ext(char *path, char *ext);
-
+/* file */
 char		*get_file_content(char *path);
 
+/* map */
 t_map		*init_map(char *path);
 
 void		free_map(t_map *m, int i);
 
+/* draw */
 void		draw_background(t_fdf *fdf);
 
 void		draw_menu_background(t_fdf *fdf);
@@ -99,6 +98,17 @@ int			draw_iso_map(t_fdf *fdf);
 
 void		draw_42_logo(t_fdf *fdf);
 
+/* utils */
+int			ft_is_valid_ext(char *path, char *ext);
+
 int			ft_atoi_base(char *str, char *base);
+
+int			ft_contains(char *str, char c);
+
+int			ft_split_count(char **split);
+
+int			ft_abs(int n);
+
+void		ft_free_split(char **split);
 
 #endif

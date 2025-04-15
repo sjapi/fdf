@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 18:24:51 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/14 21:02:05 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/15 23:02:01 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,15 @@
 
 int	close_window(void *param)
 {
-	return ((void)param, exit(1), 0);
+	t_fdf	*fdf;
+
+	fdf = (t_fdf *)param;
+	mlx_destroy_image(fdf->mlx, fdf->img);
+	mlx_destroy_window(fdf->mlx, fdf->win);
+	mlx_destroy_display(fdf->mlx);
+	free_map(fdf->m, fdf->m->y_len);
+	free(fdf->mlx);
+	exit(0);
 }
 
 void	init_fdf(t_fdf *fdf)
@@ -42,11 +50,11 @@ int	handle_key_hooks(int key, void *param)
 {
 	t_fdf	*fdf;
 
-	if (key == ESC)
-		close_window(0);
 	fdf = (t_fdf *)param;
+	if (key == ESC)
+		return (close_window(fdf), 0);
 	if (key == RESET)
-		init_fdf(fdf);
+		return (init_fdf(fdf), 0);
 	fdf->zoom += key == ZOOM_IN;
 	fdf->zoom -= key == ZOOM_OUT;
 	fdf->origin_x -= (key == LEFT) * 10;
@@ -68,18 +76,13 @@ int	main(int argc, char **argv)
 	fdf.m = init_map(argv[1]);
 	if (!fdf.m)
 		return (ft_putstr_fd("ERROR: Map initialization failed\n", 1), 1);
-
-	return (0);
-
 	fdf.mlx = mlx_init();
 	fdf.win = mlx_new_window(fdf.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "FdF");
 	fdf.img = mlx_new_image(fdf.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	fdf.addr = mlx_get_data_addr(fdf.img, &fdf.bpp, &fdf.line_len, &fdf.endian);
 	re_draw(&fdf);
 	mlx_key_hook(fdf.win, handle_key_hooks, &fdf);
-	mlx_hook(fdf.win, 17, 0, close_window, 0);
+	mlx_hook(fdf.win, 17, 0, close_window, &fdf);
 	mlx_loop(fdf.mlx);
-	mlx_destroy_display(fdf.mlx);
-	free_map(fdf.m, fdf.m->y_len);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 20:01:12 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/16 00:34:18 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:06:23 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include <stdlib.h>
 #include <fcntl.h>
+#include <limits.h>
 
 void	free_map(t_map *m, int y)
 {
@@ -33,10 +34,11 @@ static int	get_x_len(char **lines)
 	int		i;
 
 	i = -1;
+	x_len = INT_MAX;
 	while (lines[++i] != 0)
 	{
 		split = ft_split(lines[i], ' ');
-		x_len = ft_split_count(split);
+		x_len = ft_min(ft_split_count(split), x_len);
 		ft_free_split(split);
 	}
 	return (x_len);
@@ -56,17 +58,16 @@ static int	fill_mtrx_line(t_map *m, int y, char **split)
 			if (!num_and_color)
 				return (0);
 			m->mtrx[y][x].value = ft_atoi(num_and_color[0]);
-			m->mtrx[y][x].color = ft_atoi_base(num_and_color[1] + 2, "0123456789abcdef");
+			m->mtrx[y][x].color = ft_atoi_base(num_and_color[1] + 2,
+					"0123456789abcdef");
 			if (!m->mtrx[y][x].color)
-				m->mtrx[y][x].color = ft_atoi_base(num_and_color[1] + 2, "0123456789ABCDEF");
-			printf("color: %s\n", num_and_color[1] + 2);
+				m->mtrx[y][x].color = ft_atoi_base(num_and_color[1] + 2,
+						"0123456789ABCDEF");
 			ft_free_split(num_and_color);
+			continue ;
 		}
-		else
-		{
-			m->mtrx[y][x].value = ft_atoi(split[x]);
-			m->mtrx[y][x].color = 0xffffff;
-		}
+		m->mtrx[y][x].value = ft_atoi(split[x]);
+		m->mtrx[y][x].color = 0xffffff;
 	}
 	return (1);
 }
@@ -77,8 +78,14 @@ static int	fill_map_mtrx(t_map *m, char **lines)
 	char	**split;
 
 	y = -1;
+	m->mtrx = malloc(sizeof(t_map_point *) * m->y_len);
+	if (!m->mtrx)
+		return (free_map(m, 0), 0);
 	while (lines[++y])
 	{
+		m->mtrx[y] = malloc(sizeof(t_map_point) * m->x_len);
+		if (!m->mtrx[y])
+			return (free_map(m, y), 0);
 		split = ft_split(lines[y], ' ');
 		if (!split)
 			return (0);
@@ -94,7 +101,6 @@ t_map	*init_map(char *path)
 	char		*content;
 	char		**lines;
 	t_map		*m;
-	int			i;
 
 	content = get_file_content(path);
 	if (!content)
@@ -108,16 +114,6 @@ t_map	*init_map(char *path)
 		return (0);
 	m->y_len = ft_split_count(lines);
 	m->x_len = get_x_len(lines);
-	m->mtrx = malloc(sizeof(t_map_point *) * m->y_len);
-	if (!m->mtrx)
-		return (free_map(m, 0), NULL);
-	i = -1;
-	while (++i < m->y_len)
-	{
-		m->mtrx[i] = malloc(sizeof(t_map_point) * m->x_len);
-		if (!m->mtrx[i])
-			return (free_map(m, i), NULL);
-	}
 	if (!fill_map_mtrx(m, lines))
 		return (ft_free_split(lines), free_map(m, m->y_len), NULL);
 	ft_free_split(lines);

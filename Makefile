@@ -6,15 +6,16 @@
 #    By: azolotar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/06 18:24:27 by azolotar          #+#    #+#              #
-#    Updated: 2025/04/15 23:04:26 by azolotar         ###   ########.fr        #
+#    Updated: 2025/04/17 18:05:42 by azolotar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=fdf
 
 # SOURCE
-FILES=main.c file.c utils.c parse.c \
-		draw.c menu.c ft_atoi_base.c
+FILES=main.c file.c parse.c \
+		draw.c menu.c ft_atoi_base.c \
+		gradient.c utils1.c utils2.c
 
 SRCS_DIR=./srcs/
 

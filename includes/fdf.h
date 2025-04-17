@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:40:20 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/16 00:46:35 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:50:12 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include <stdio.h>
 
-# define WINDOW_WIDTH 1000
-# define WINDOW_HEIGHT 1000
+# define WIN_WIDTH 1000
+# define WIN_HEIGHT 1000
 # define TILE 20
 
 # define ZOOM_IN 61
@@ -30,6 +30,8 @@
 # define ROTATE_LEFT 65361
 # define ROTATE_RIGHT 65363
 # define RESET 114
+# define Z_PLUS 109
+# define Z_MINUS 110
 
 typedef struct s_dda_line
 {
@@ -46,6 +48,7 @@ typedef struct s_point
 {
 	int	x;
 	int	y;
+	int	color;
 }	t_point;
 
 typedef struct s_map_point
@@ -73,6 +76,7 @@ typedef struct s_fdf
 
 	t_point	origin;
 	int		zoom;
+	float	z;
 
 	int		origin_x;
 	int		origin_y;
@@ -93,15 +97,15 @@ t_map		*init_map(char *path);
 void		free_map(t_map *m, int i);
 
 /* draw */
-void		draw_background(t_fdf *fdf);
+void		draw_rect(t_fdf *fdf, t_point p1, t_point p2, int color);
 
-void		draw_menu_background(t_fdf *fdf);
-
-void		draw_menu(t_fdf *fdf);
+void		print_menu(t_fdf *fdf);
 
 int			draw_iso_map(t_fdf *fdf);
 
 void		draw_42_logo(t_fdf *fdf);
+
+int			get_gradient_color(int color_start, int color_end, float rel_pos);
 
 /* utils */
 int			ft_is_valid_ext(char *path, char *ext);
@@ -113,6 +117,8 @@ int			ft_contains(char *str, char c);
 int			ft_split_count(char **split);
 
 int			ft_abs(int n);
+
+int			ft_min(int a, int b);
 
 void		ft_free_split(char **split);
 

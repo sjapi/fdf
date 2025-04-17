@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 03:07:43 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/16 03:07:44 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:49:49 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,27 @@ int	close_window(void *param)
 
 void	init_fdf(t_fdf *fdf)
 {
-	fdf->zoom = 0;
+	fdf->zoom = 1;
+	fdf->z = 1;
 	fdf->origin_x = 300;
 	fdf->origin_y = 300;
 }
 
 void	re_draw(t_fdf *fdf)
 {
-	draw_background(fdf);
+	draw_rect(fdf, (t_point){0, 0, 0}, (t_point){WIN_WIDTH, WIN_HEIGHT, 0}, 0);
 	draw_iso_map(fdf);
-	draw_menu_background(fdf);
+	draw_rect(fdf, (t_point){10, 10, 0}, (t_point){120, 360, 0}, 0x323232);
 	draw_42_logo(fdf);
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
-	draw_menu(fdf);
+	print_menu(fdf);
 }
 
 int	handle_key_hooks(int key, void *param)
 {
 	t_fdf	*fdf;
 
+	printf("%d\n", key);
 	fdf = (t_fdf *)param;
 	if (key == ESC)
 		return (close_window(fdf), 0);
@@ -61,6 +63,8 @@ int	handle_key_hooks(int key, void *param)
 	fdf->origin_x += (key == RIGHT) * 10;
 	fdf->origin_y -= (key == UP) * 10;
 	fdf->origin_y += (key == DOWN) * 10;
+	fdf->z += 0.1 * (float)(key == Z_PLUS);
+	fdf->z -= 0.1 * (float)(key == Z_MINUS);
 	return (re_draw(fdf), 0);
 }
 
@@ -77,11 +81,11 @@ int	main(int argc, char **argv)
 	if (!fdf.m)
 		return (ft_putstr_fd("ERROR: Map initialization failed\n", 1), 1);
 	fdf.mlx = mlx_init();
-	fdf.win = mlx_new_window(fdf.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "FdF");
-	fdf.img = mlx_new_image(fdf.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	fdf.win = mlx_new_window(fdf.mlx, WIN_WIDTH, WIN_HEIGHT, "FdF");
+	fdf.img = mlx_new_image(fdf.mlx, WIN_WIDTH, WIN_HEIGHT);
 	fdf.addr = mlx_get_data_addr(fdf.img, &fdf.bpp, &fdf.line_len, &fdf.endian);
 	re_draw(&fdf);
-	mlx_key_hook(fdf.win, handle_key_hooks, &fdf);
+	mlx_hook(fdf.win, 2, 1L >> 0, handle_key_hooks, &fdf);
 	mlx_hook(fdf.win, 17, 0, close_window, &fdf);
 	mlx_loop(fdf.mlx);
 	return (0);

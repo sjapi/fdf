@@ -6,14 +6,12 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:40:20 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/17 18:50:12 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:15:19 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-
-# include <stdio.h>
 
 # define WIN_WIDTH 1000
 # define WIN_HEIGHT 1000
@@ -119,6 +117,8 @@ int			ft_split_count(char **split);
 int			ft_abs(int n);
 
 int			ft_min(int a, int b);
+
+int			ft_max(int a, int b);
 
 void		ft_free_split(char **split);
 

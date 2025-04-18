@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:16:19 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/17 18:46:01 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:03:16 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static t_point	crp(int x, int y)
 
 	p.x = 30 + x * 10;
 	p.y = 20 + y * 10;
+	p.color = 0xffffff;
 	return (p);
 }
 

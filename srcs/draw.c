@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:08:37 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/17 20:22:01 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:23:51 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,11 @@ static t_point	get_point(t_fdf *fdf, int x, int y)
 	int		z;
 	t_point	p;
 
-	tile_width = TILE + fdf->zoom;
+	tile_width = calculate_tile_size(fdf) + fdf->zoom;
+	tile_width = ft_min(
+			WIN_WIDTH / ((fdf->m->x_len + fdf->m->y_len - 1) * 2),
+			WIN_HEIGHT / (fdf->m->x_len + fdf->m->y_len - 1));
+	tile_widht = ft_max(tile_width, 1);
 	p.x = fdf->origin_x + (x - y) * tile_width * 2;
 	z = (int)((float)fdf->m->mtrx[y][x].value * fdf->z) *(tile_width);
 	p.y = fdf->origin_y + (x + y) * tile_width - z;

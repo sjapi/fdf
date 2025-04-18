@@ -6,13 +6,20 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 17:57:53 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/17 17:58:58 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:15:06 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_min(int a, int b)
 {
 	if (a < b)
+		return (a);
+	return (b);
+}
+
+int	ft_max(int a, int b)
+{
+	if (a > b)
 		return (a);
 	return (b);
 }

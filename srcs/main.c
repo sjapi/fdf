@@ -6,7 +6,7 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 03:07:43 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/17 18:49:49 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:20:07 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	init_fdf(t_fdf *fdf)
 {
 	fdf->zoom = 1;
 	fdf->z = 1;
-	fdf->origin_x = 300;
-	fdf->origin_y = 300;
+	fdf->origin_x = 400;
+	fdf->origin_y = 350;
 }
 
 void	re_draw(t_fdf *fdf)
@@ -51,7 +51,6 @@ int	handle_key_hooks(int key, void *param)
 {
 	t_fdf	*fdf;
 
-	printf("%d\n", key);
 	fdf = (t_fdf *)param;
 	if (key == ESC)
 		return (close_window(fdf), 0);

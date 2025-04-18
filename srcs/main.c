@@ -6,12 +6,10 @@
 /*   By: azolotar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 03:07:43 by azolotar          #+#    #+#             */
-/*   Updated: 2025/04/18 13:20:07 by azolotar         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:32:28 by azolotar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include "fdf.h"
 #include "mlx.h"
 #include "libft.h"

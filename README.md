@@ -7,5 +7,4 @@ This project involves representing a wireframe landscape in 3D
     * No rotation and another projection
 * Developed for Linux
 
-<img src="https://github.com/032nnxkitty/fdf/blob/main/fdf.png" width="500">
-
+<img src="https://github.com/sjapi/fdf/blob/main/fdf.png" width="500">
